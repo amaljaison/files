@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akhil Jaison &amp; Josmy John — Betrothal &amp; Wedding</title>
+<meta name="description" content="Join us to celebrate the Betrothal and Wedding of Akhil Jaison and Josmy John — October 2026, Kottayam, Kerala.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F8F5EE;
+    --sage:#87977A;
+    --forest:#354A3A;
+    --rose:#C9A3A0;
+    --gold:#C6A96B;
+    --gold-soft: rgba(198,169,107,0.30);
+    --line: rgba(53,74,58,0.14);
+    --ink: var(--forest);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    line-height:1.65;
+    overflow-x: hidden;
+  }
+  .serif{ font-family:'Cormorant Garamond', serif; }
+  .wrap{ max-width: 720px; margin:0 auto; padding: 0 28px; position: relative; }
+  section{ padding: 96px 0; border-bottom: 1px solid var(--line); position: relative; }
+  section:last-of-type{ border-bottom:none; }
+  a{ color: inherit; }
+
+  .reveal{ opacity: 0; transform: translateY(18px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position: fixed; top:0; left:0; right:0; z-index: 50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px 32px;
+    background: rgba(248,245,238,0.85);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  nav.scrolled{ border-color: var(--line); }
+  nav .brand{
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--forest);
+    text-decoration: none;
+  }
+  nav ul{
+    list-style:none;
+    display:flex;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+  nav a.navlink{
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    text-decoration:none;
+    color: var(--forest);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  nav a.navlink:hover{ border-color: var(--gold); color: var(--gold); }
+  @media (max-width: 700px){
+    nav ul{ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding: 120px 28px 80px;
+    position: relative;
+    color: var(--ivory);
+    background:
+      linear-gradient(180deg, rgba(53,74,58,0.55) 0%, rgba(53,74,58,0.35) 40%, rgba(248,245,238,1) 96%),
+      url('assets/couple-photo.jpg') center 20% / cover no-repeat;
+  }
+  .hero .kicker{
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: #EDE6D6;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(46px, 10vw, 88px);
+    line-height: 1.05;
+    color: #FFFDF8;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+  }
+  .hero .amp{
+    display:inline-block;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    padding: 0 10px;
+  }
+  .hero .tagline{
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: #F1EADA;
+    margin: 22px 0 40px;
+  }
+  .hero-meta{
+    display:flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content:center;
+    margin-bottom: 44px;
+  }
+  .hero-meta div{ text-align:center; }
+  .hero-meta .label{
+    font-size: 11px; letter-spacing: 0.12em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .hero-meta .val{ font-size: 15px; color: #FFFDF8; }
+  .hero-cta{ display:flex; gap: 16px; flex-wrap: wrap; justify-content:center; }
+  .btn{
+    display:inline-block;
+    padding: 13px 28px;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-decoration:none;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+  }
+  .btn-gold{ background: var(--gold); color: #2A2410; }
+  .btn-gold:hover{ background:#D8BC85; }
+  .btn-outline{ border: 1px solid rgba(255,253,248,0.6); color: #FFFDF8; }
+  .btn-outline:hover{ background: rgba(255,253,248,0.12); }
+  .scroll-hint{
+    position:absolute; bottom: 26px; left:50%; transform:translateX(-50%);
+    font-size: 11px; letter-spacing: 0.15em; color: #F1EADA; opacity: 0.8;
+  }
+
+  /* ---------- Section titles ---------- */
+  .eyebrow{
+    text-align:center; font-size: 12px; letter-spacing: 0.16em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 10px;
+  }
+  .section-title{
+    font-family:'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 40px;
+    margin-bottom: 8px;
+    color: var(--forest);
+    text-align:center;
+  }
+  .section-sub{
+    font-size: 15px;
+    color: var(--sage);
+    margin-bottom: 12px;
+    text-align:center;
+  }
+  .divider-sprig{ display:flex; justify-content:center; margin: 6px 0 44px; opacity: 0.75; }
+
+  /* ---------- Story timeline ---------- */
+  .timeline{ position: relative; margin-top: 20px; }
+  .timeline::before{
+    content:""; position:absolute; left: 27px; top:0; bottom:0; width:1px;
+    background: var(--line);
+  }
+  .chapter{ display:flex; gap: 24px; margin-bottom: 52px; }
+  .chapter:last-child{ margin-bottom: 0; }
+  .chapter-dot{
+    flex: 0 0 56px; height: 56px; border-radius: 50%;
+    background: var(--ivory); border: 1px solid var(--gold-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 13px;
+    color: var(--gold); position: relative; z-index:1;
+  }
+  .chapter-body{ flex: 1; }
+  .chapter-year{ font-size: 12px; letter-spacing: 0.1em; color: var(--sage); margin-bottom: 4px; }
+  .chapter-label{ font-size: 11px; color: var(--rose); letter-spacing: 0.08em; margin-bottom: 8px; }
+  .chapter-body h3{
+    font-family:'Cormorant Garamond', serif; font-size: 26px; font-weight: 500;
+    color: var(--forest); margin-bottom: 8px;
+  }
+  .chapter-body p{ font-size: 15px; color: #5B6F5E; max-width: 52ch; }
+  .chapter-img{
+    margin-top: 14px; width: 100%; max-width: 320px; aspect-ratio: 4/3;
+    border-radius: 3px; border: 1px solid var(--gold-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 14px;
+    color: rgba(53,74,58,0.45); overflow:hidden;
+  }
+  .chapter-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .cimg1{ background: linear-gradient(150deg, #EFE8D8, #C9A3A0); }
+  .cimg2{ background: linear-gradient(150deg, #DCE3D2, #87977A); }
+  .cimg3{ background: linear-gradient(150deg, #E9DCC0, #C6A96B); }
+  .cimg4{ background: linear-gradient(150deg, #E7DCC6, #A9B79B); }
+
+  /* ---------- Countdown ---------- */
+  .countdown{
+    display:flex; gap: 18px; justify-content:center; flex-wrap: wrap;
+    margin: 8px 0 50px;
+  }
+  .cd-box{
+    background:#FFFFFF; border: 1px solid var(--line); border-radius: 4px;
+    padding: 20px 22px; text-align:center; min-width: 84px;
+  }
+  .cd-num{
+    font-family:'Cormorant Garamond', serif; font-size: 34px; font-weight:500; color: var(--forest);
+  }
+  .cd-label{ font-size: 11px; letter-spacing: 0.1em; color: var(--sage); text-transform: uppercase; margin-top: 4px; }
+
+  /* ---------- Events ---------- */
+  .event-block{ margin-bottom: 64px; }
+  .event-block:last-child{ margin-bottom: 0; }
+  .event-head{
+    display:flex; flex-direction: column; align-items:center; gap: 4px;
+    padding-bottom: 18px; margin-bottom: 30px; text-align:center;
+  }
+  .event-icon{ font-size: 22px; margin-bottom: 6px; }
+  .event-name{ font-family:'Cormorant Garamond', serif; font-weight: 500; font-size: 32px; color: var(--forest); }
+  .event-date{ font-size: 14px; color: var(--gold); letter-spacing: 0.02em; }
+  .occasion-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .occasion{
+    background: #FFFFFF; border: 1px solid var(--line); border-radius: 4px;
+    padding: 26px 22px; box-shadow: 0 1px 0 rgba(53,74,58,0.03);
+  }
+  .occasion h4{ font-size: 11.5px; letter-spacing: 0.1em; color: var(--sage); margin-bottom: 10px; }
+  .occasion .venue{ font-family:'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; margin-bottom: 4px; color: var(--forest); }
+  .occasion .addr{ font-size: 14px; color: var(--sage); margin-bottom: 8px; }
+  .occasion .time{ font-size: 15px; color: var(--rose); margin-bottom: 10px; }
+  .occasion .maplink{
+    display:inline-block; font-size: 13px; color: var(--gold); text-decoration:none;
+    border-bottom: 1px solid var(--gold-soft);
+  }
+  .occasion .maplink:hover{ border-bottom-color: var(--gold); }
+
+  /* ---------- Gallery ---------- */
+  .gallery-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .ph{
+    aspect-ratio: 4/5; border-radius: 3px; position: relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 15px;
+    color: rgba(53,74,58,0.45); text-align:center; padding: 12px;
+    border: 1px solid var(--gold-soft);
+  }
+  .ph::after{
+    content:"View"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background: rgba(53,74,58,0.45); color:#FFFDF8; font-family:'Inter',sans-serif; font-style:normal;
+    font-size: 12px; letter-spacing:0.1em; text-transform:uppercase;
+    opacity:0; transition: opacity 0.25s ease;
+  }
+  .ph:hover::after{ opacity:1; }
+  .ph1{ background: linear-gradient(150deg, #EFE8D8, #C9A3A0); }
+  .ph2{ background: linear-gradient(150deg, #DCE3D2, #87977A); aspect-ratio: 4/6; grid-row: span 2; }
+  .ph3{ background: linear-gradient(150deg, #E9DCC0, #C6A96B); }
+  .ph4{ background: linear-gradient(150deg, #E7DCC6, #A9B79B); }
+  .ph5{ background: linear-gradient(150deg, #DDD3B8, #87977A); }
+  .ph6{ background: linear-gradient(150deg, #E7DCC6, #C9A3A0); }
+
+  /* ---------- Wishes ---------- */
+  .wish-note{ text-align:center; font-size: 14px; color: var(--sage); margin-bottom: 46px; }
+  .wish-note a{ color: var(--gold); }
+  .wishes-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .wish-card{
+    background:#FFFFFF; border: 1px solid var(--line); border-radius: 4px; padding: 26px 24px;
+  }
+  .wish-quote{ font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: #4A5A4C; margin-bottom: 16px; }
+  .wish-who{ display:flex; align-items:center; gap: 10px; }
+  .wish-avatar{
+    width: 34px; height:34px; border-radius:50%; background: var(--gold-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif; font-size: 14px; color: var(--forest);
+  }
+  .wish-name{ font-size: 14px; font-weight:500; color: var(--forest); }
+  .wish-rel{ font-size: 12px; color: var(--sage); }
+  .send-wish{ text-align:center; margin-top: 40px; }
+
+  /* ---------- Footer ---------- */
+  footer{ text-align:center; padding: 70px 28px 50px; position:relative; }
+  footer .monogram{
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: var(--gold);
+    margin-bottom: 16px;
+  }
+  footer .fnames{ font-family:'Cormorant Garamond', serif; font-size: 26px; color: var(--forest); margin-bottom: 6px; }
+  footer .fdate{ font-size: 13px; color: var(--sage); margin-bottom: 30px; }
+  footer .verse{
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
+    color: #5B6F5E; max-width: 40ch; margin: 0 auto 34px; line-height: 1.6;
+  }
+  footer .verse cite{ display:block; font-size: 13px; color: var(--gold); margin-top: 10px; font-style:normal; }
+  footer nav.footer-nav{ position:static; background:none; backdrop-filter:none; padding:0; justify-content:center; }
+  footer nav.footer-nav ul{ display:flex; justify-content:center; gap: 20px; margin-bottom: 24px; }
+  .credit{ font-size: 12px; color: var(--sage); opacity: 0.8; }
+
+  /* ---------- Responsive ---------- */
+  @media (min-width: 640px){ .wrap{ padding: 0 40px; } }
+  @media (min-width: 960px){
+    .wrap{ max-width: 920px; }
+    .gallery-grid{ grid-template-columns: repeat(4, 1fr); }
+    .ph2{ grid-row: span 1; aspect-ratio: 4/5; }
+    .wishes-grid{ grid-template-columns: repeat(4, 1fr); }
+    section{ padding: 120px 0; }
+  }
+  @media (max-width: 700px){
+    .wishes-grid{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px){
+    .occasion-grid{ grid-template-columns: 1fr; gap: 18px; }
+    section{ padding: 72px 0; }
+    .section-title{ font-size: 32px; }
+    .hero-meta{ gap: 26px; }
+    .chapter{ gap: 16px; }
+    .chapter-dot{ flex-basis: 44px; height: 44px; font-size: 11px; }
+  }
+
+  a:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<nav id="siteNav">
+  <a class="brand" href="#top">A &amp; J</a>
+  <ul>
+    <li><a class="navlink" href="#story">Our Story</a></li>
+    <li><a class="navlink" href="#details">Wedding Day</a></li>
+    <li><a class="navlink" href="#gallery">Gallery</a></li>
+    <li><a class="navlink" href="#wishes">Wishes</a></li>
+  </ul>
+</nav>
+
+<div class="hero" id="top">
+  <div class="kicker reveal">Together Forever</div>
+  <h1 class="reveal">Akhil<span class="amp">&amp;</span>Josmy</h1>
+  <div class="tagline reveal">A love written in prayer, sealed with God's blessing</div>
+  <div class="hero-meta reveal">
+    <div><div class="label">Date</div><div class="val">21 · Oct · 2026</div></div>
+    <div><div class="label">Church</div><div class="val">St. Antony's Church</div></div>
+    <div><div class="label">Place</div><div class="val">Edakkunnu</div></div>
+  </div>
+  <div class="hero-cta reveal">
+    <a class="btn btn-gold" href="#story">Our Story</a>
+    <a class="btn btn-outline" href="#gallery">View Gallery</a>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</div>
+
+<section id="story">
+  <div class="wrap">
+    <div class="eyebrow reveal">Chapter by Chapter</div>
+    <div class="section-title reveal">Our Love Story</div>
+    <div class="section-sub reveal">Every chapter written with love</div>
+    <div class="divider-sprig reveal">
+      <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 7H58" stroke="#C6A96B" stroke-width="0.8"/>
+        <ellipse cx="30" cy="7" rx="4" ry="2" fill="#87977A" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <div class="timeline">
+      <div class="chapter reveal">
+        <div class="chapter-dot">01</div>
+        <div class="chapter-body">
+          <div class="chapter-year">2019</div>
+          <div class="chapter-label">The Beginning</div>
+          <h3>First Hello</h3>
+          <p>[Placeholder — how you first met or first noticed each other.]</p>
+          <div class="chapter-img cimg1">photo</div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <div class="chapter-dot">02</div>
+        <div class="chapter-body">
+          <div class="chapter-year">2022</div>
+          <div class="chapter-label">Growing Closer</div>
+          <h3>A Quiet Friendship</h3>
+          <p>[Placeholder — how the friendship deepened into something more.]</p>
+          <div class="chapter-img cimg2">photo</div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <div class="chapter-dot">03</div>
+        <div class="chapter-body">
+          <div class="chapter-year">2026</div>
+          <div class="chapter-label">Official Meeting ♡</div>
+          <h3>Pennu Kaanal</h3>
+          <p>[Placeholder — the families' official meeting, blessed with smiles and flowers.]</p>
+          <div class="chapter-img cimg3">photo</div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <div class="chapter-dot">04</div>
+        <div class="chapter-body">
+          <div class="chapter-year">2026</div>
+          <div class="chapter-label">Date Fixed ♡</div>
+          <h3>Betrothal Day</h3>
+          <p>The promise made official — with family, prayer, and celebration on 17th October 2026.</p>
+          <div class="chapter-img cimg4">photo</div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <div class="chapter-dot">05</div>
+        <div class="chapter-body">
+          <div class="chapter-year">2026</div>
+          <div class="chapter-label">21 · Oct · 2026 ✨</div>
+          <h3>Forever Begins</h3>
+          <p>Under God's blessing and the witness of everyone who loves them, Akhil and Josmy begin their forever.</p>
+          <div class="chapter-img" style="background:none; padding:0;">
+            <img src="assets/couple-photo.jpg" alt="Akhil Jaison and Josmy John">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="details">
+  <div class="wrap">
+    <div class="eyebrow reveal">Save the Date</div>
+    <div class="section-title reveal">The Celebrations</div>
+    <div class="section-sub reveal">Two days of blessings — you're invited to both</div>
+    <div class="divider-sprig reveal">
+      <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 7H58" stroke="#C6A96B" stroke-width="0.8"/>
+        <ellipse cx="30" cy="7" rx="4" ry="2" fill="#C9A3A0" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <div class="countdown reveal" id="countdown">
+      <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-label">Days</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Hours</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Mins</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-label">Secs</div></div>
+    </div>
+
+    <div class="event-block reveal">
+      <div class="event-head">
+        <div class="event-icon">🌿</div>
+        <div class="event-name">Betrothal Day</div>
+        <div class="event-date serif">Saturday, 17th October 2026</div>
+      </div>
+      <div class="occasion-grid">
+        <div class="occasion">
+          <h4>CEREMONY</h4>
+          <div class="venue">Holy Family Church</div>
+          <div class="addr">Mankuzhy</div>
+          <div class="time">11:30 AM</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Holy+Family+Church+Mankuzhy" target="_blank" rel="noopener">Get Directions</a>
+        </div>
+        <div class="occasion">
+          <h4>RECEPTION</h4>
+          <div class="venue">Holy Family Church Parish Hall</div>
+          <div class="addr">Mankuzhy</div>
+          <div class="time">Following the ceremony</div>
+          <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Holy+Family+Church+Mankuzhy" target="_blank" rel="noopener">Get Directions</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-block reveal">
+      <div class="event-head">
+        <div class="event-icon">⛪</div>
+        <div class="event-name">Wedding Day</div>
+        <div class="event-date serif">Wednesday, 21st October 2026</div>
+      </div>
+      <div class="occasion-grid">
+        <div class="occasion">
+          <h4>CEREMONY</h4>
+          <div class="venue">St. Antony's Church</div>
+          <div class="addr">Edakkunnu</div>
+          <div class="time">11:30 AM · Holy Mass &amp; Wedding</div>
+          <a class="maplink" href="https://maps.app.goo.gl/82twvxLzqveeedZ39" target="_blank" rel="noopener">Get Directions</a>
+        </div>
+        <div class="occasion">
+          <h4>RECEPTION</h4>
+          <div class="venue">St. Antony's Church Parish Hall</div>
+          <div class="addr">Edakkunnu</div>
+          <div class="time">Following the ceremony</div>
+          <a class="maplink" href="https://maps.app.goo.gl/82twvxLzqveeedZ39" target="_blank" rel="noopener">Get Directions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="eyebrow reveal">Captured Moments</div>
+    <div class="section-title reveal">Our Gallery</div>
+    <div class="section-sub reveal">Every picture tells our story</div>
+    <div class="divider-sprig reveal">
+      <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 7H58" stroke="#C6A96B" stroke-width="0.8"/>
+        <ellipse cx="30" cy="7" rx="4" ry="2" fill="#87977A" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="ph ph1">photo 1</div>
+      <div class="ph ph2">photo 2</div>
+      <div class="ph ph3">photo 3</div>
+      <div class="ph ph4">photo 4</div>
+      <div class="ph ph5">photo 5</div>
+      <div class="ph ph6">photo 6</div>
+    </div>
+  </div>
+</section>
+
+<section id="wishes">
+  <div class="wrap">
+    <div class="eyebrow reveal">Words of Love</div>
+    <div class="section-title reveal">Wishes &amp; Blessings</div>
+    <div class="section-sub reveal">Notes from our family, to treasure forever</div>
+    <div class="divider-sprig reveal">
+      <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 7H58" stroke="#C6A96B" stroke-width="0.8"/>
+        <ellipse cx="30" cy="7" rx="4" ry="2" fill="#C9A3A0" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="wishes-grid reveal">
+      <div class="wish-card">
+        <div class="wish-quote">"[Placeholder wish — a blessing or a favorite memory, in the family member's own words.]"</div>
+        <div class="wish-who">
+          <div class="wish-avatar">T</div>
+          <div><div class="wish-name">Mr. Thomas Varghese</div><div class="wish-rel">Father of the Groom</div></div>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-quote">"[Placeholder wish for the couple.]"</div>
+        <div class="wish-who">
+          <div class="wish-avatar">A</div>
+          <div><div class="wish-name">Mrs. Annamma Thomas</div><div class="wish-rel">Mother of the Groom</div></div>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-quote">"[Placeholder wish for the couple.]"</div>
+        <div class="wish-who">
+          <div class="wish-avatar">K</div>
+          <div><div class="wish-name">Mr. Kurian Joseph</div><div class="wish-rel">Father of the Bride</div></div>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-quote">"[Placeholder wish for the couple.]"</div>
+        <div class="wish-who">
+          <div class="wish-avatar">M</div>
+          <div><div class="wish-name">Mrs. Mariamma Kurian</div><div class="wish-rel">Mother of the Bride</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="send-wish reveal">
+      <a class="btn btn-gold" href="mailto:akhilandjosmy@example.com?subject=A%20Wish%20for%20Ave%20Maria%20%26%20Jerin">♡ Send Your Wish</a>
+      <div class="wish-note" style="margin-top:16px;">Every wish is delivered directly to <a href="mailto:akhilandjosmy@example.com">akhilandjosmy@example.com</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="monogram reveal">A &amp; J</div>
+  <div class="fnames reveal">Akhil Jaison &amp; Josmy John</div>
+  <div class="fdate reveal">21 · October · 2026 · Kottayam, Kerala</div>
+  <div class="verse reveal">
+    "Two are better than one... if either of them falls down, one can help the other up."
+    <cite>— Ecclesiastes 4:9</cite>
+  </div>
+  <nav class="footer-nav">
+    <ul>
+      <li><a class="navlink" href="#top">Home</a></li>
+      <li><a class="navlink" href="#story">Our Story</a></li>
+      <li><a class="navlink" href="#details">Wedding Day</a></li>
+      <li><a class="navlink" href="#gallery">Gallery</a></li>
+      <li><a class="navlink" href="#wishes">Wishes</a></li>
+    </ul>
+  </nav>
+  <div class="credit reveal">Made with ♡ for Akhil &amp; Josmy · 2026</div>
+</footer>
+
+<script>
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Nav background on scroll
+  (function(){
+    var nav = document.getElementById('siteNav');
+    window.addEventListener('scroll', function(){
+      if (window.scrollY > 40){ nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    });
+  })();
+
+  // Countdown to Wedding Day: 13 Dec 2026, 9:00 AM IST
+  (function(){
+    var target = new Date('2026-10-21T11:30:00+05:30').getTime();
+    function tick(){
+      var now = new Date().getTime();
+      var diff = target - now;
+      if (diff < 0) diff = 0;
+      var d = Math.floor(diff / (1000*60*60*24));
+      var h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      var m = Math.floor((diff % (1000*60*60)) / (1000*60));
+      var s = Math.floor((diff % (1000*60)) / 1000);
+      document.getElementById('cd-days').textContent = d;
+      document.getElementById('cd-hours').textContent = h;
+      document.getElementById('cd-mins').textContent = m;
+      document.getElementById('cd-secs').textContent = s;
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
+
+</body>
+</html>
