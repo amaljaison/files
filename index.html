@@ -179,39 +179,49 @@
 
   /* ---------- Story timeline ---------- */
   .timeline{ position: relative; margin-top: 20px; }
-  .timeline::before{
-    content:""; position:absolute; left: 27px; top:0; bottom:0; width:1px;
-    background: var(--line);
-  }
-  .chapter{ display:flex; gap: 24px; margin-bottom: 52px; }
+  .timeline::before{ display:none; }
+  .chapter{ display:block; margin-bottom: 52px; }
   .chapter:last-child{ margin-bottom: 0; }
-  .chapter-dot{
-    flex: 0 0 56px; height: 56px; border-radius: 50%;
-    background: var(--ivory); border: 1px solid var(--gold-soft);
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 13px;
-    color: var(--gold); position: relative; z-index:1;
+  .chapter-body{ flex: 1; min-width: 0; }
+  .chapter-layout{ display:grid; gap: 22px; align-items:center; }
+  .chapter-copy{
+    width:100%; max-width:400px; margin:0 auto; padding: 25px 24px; border: 1px solid var(--gold-soft); border-radius: 20px;
+    background: rgba(255,253,248,0.78); box-shadow: 0 10px 24px rgba(53,74,58,0.05);
   }
-  .chapter-body{ flex: 1; }
-  .chapter-year{ font-size: 12px; letter-spacing: 0.1em; color: var(--sage); margin-bottom: 4px; }
-  .chapter-label{ font-size: 11px; color: var(--rose); letter-spacing: 0.08em; margin-bottom: 8px; }
   .chapter-body h3{
     font-family:'Cormorant Garamond', serif; font-size: 26px; font-weight: 500;
     color: var(--forest); margin-bottom: 8px;
   }
   .chapter-body p{ font-size: 15px; color: #5B6F5E; max-width: 52ch; }
   .chapter-img{
-    margin-top: 14px; width: 100%; max-width: 320px; aspect-ratio: 4/3;
-    border-radius: 3px; border: 1px solid var(--gold-soft);
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 14px;
-    color: rgba(53,74,58,0.45); overflow:hidden;
+    position:relative; width:100%; max-width:320px; margin:0 auto; aspect-ratio: 4 / 3; border-radius: 24px; border: 2px solid var(--gold-soft);
+    background: #FFFDF8; padding: 0; overflow:hidden;
+    box-shadow: 0 10px 24px rgba(53,74,58,0.08);
+    transition: transform 0.55s ease, box-shadow 0.55s ease;
   }
   .chapter-img img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .cimg1{ background: linear-gradient(150deg, #EFE8D8, #C9A3A0); }
-  .cimg2{ background: linear-gradient(150deg, #DCE3D2, #87977A); }
-  .cimg3{ background: linear-gradient(150deg, #E9DCC0, #C6A96B); }
-  .cimg4{ background: linear-gradient(150deg, #E7DCC6, #A9B79B); }
+  .chapter-photo-wash{ position:absolute; inset:0; background:linear-gradient(to top, rgba(201,163,160,0.58), transparent 56%); pointer-events:none; }
+  .chapter-photo-year{
+    position:absolute; top:14px; right:14px; border:1px solid rgba(201,163,160,0.35); border-radius:100px;
+    padding:4px 12px; background:rgba(248,245,238,0.93); color:var(--rose);
+    font-size:10px; font-weight:500; letter-spacing:0.14em;
+  }
+  .chapter-photo-label{
+    position:absolute; right:14px; bottom:14px; left:14px; padding:5px 12px; border-radius:100px;
+    background:rgba(201,163,160,0.86); color:#FFFDF8; text-align:center;
+    font-family:'Cormorant Garamond', serif; font-size:15px; font-weight:600;
+  }
+  .chapter-img--empty{
+    min-height: 180px; display:flex; align-items:center; justify-content:center;
+    padding: 24px; text-align:center; background: linear-gradient(145deg, #FFFDF8, #F0E9DB);
+    font-family:'Cormorant Garamond', serif; font-style:italic; font-size:18px; color:var(--sage);
+  }
+  .chapter.reveal .chapter-img{ opacity:0; transform: translateX(-18px) scale(0.98); }
+  .chapter.reveal .chapter-copy{ opacity:0; transform: translateX(18px); }
+  .chapter.reveal.in .chapter-img, .chapter.reveal.in .chapter-copy{ opacity:1; transform:none; }
+  .chapter.reveal.in .chapter-img{ transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s, box-shadow 0.55s ease; }
+  .chapter.reveal.in .chapter-copy{ transition: opacity 0.7s ease 0.28s, transform 0.7s ease 0.28s; }
+  .chapter:hover .chapter-img{ transform: translateY(-5px) scale(1.01); box-shadow: 0 16px 32px rgba(53,74,58,0.13); }
 
   /* ---------- Countdown ---------- */
   .countdown{
@@ -267,6 +277,7 @@
     font-size: 12px; letter-spacing:0.1em; text-transform:uppercase;
     opacity:0; transition: opacity 0.25s ease;
   }
+  .ph img{ width:100%; height:100%; object-fit:cover; display:block; }
   .ph:hover::after{ opacity:1; }
   .ph1{ background: linear-gradient(150deg, #EFE8D8, #C9A3A0); }
   .ph2{ background: linear-gradient(150deg, #DCE3D2, #87977A); aspect-ratio: 4/6; grid-row: span 2; }
@@ -312,6 +323,13 @@
 
   /* ---------- Responsive ---------- */
   @media (min-width: 640px){ .wrap{ padding: 0 40px; } }
+  @media (min-width: 760px){
+    .chapter{ padding: 30px 0; }
+    .chapter-layout{ grid-template-columns: minmax(220px, 320px) minmax(280px, 400px); justify-content:center; gap: 24px; }
+    .chapter-copy{ justify-self:start; }
+    .chapter:nth-child(even) .chapter-img{ order: 2; }
+    .chapter:nth-child(even) .chapter-copy{ order: 1; }
+  }
   @media (min-width: 960px){
     .wrap{ max-width: 920px; }
     .gallery-grid{ grid-template-columns: repeat(4, 1fr); }
@@ -328,7 +346,8 @@
     .section-title{ font-size: 32px; }
     .hero-meta{ gap: 26px; }
     .chapter{ gap: 16px; }
-    .chapter-dot{ flex-basis: 44px; height: 44px; font-size: 11px; }
+    .chapter-layout{ gap: 18px; }
+    .chapter-img--empty{ min-height: 150px; }
   }
 
   a:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
@@ -376,54 +395,68 @@
 
     <div class="timeline">
       <div class="chapter reveal">
-        <div class="chapter-dot">01</div>
         <div class="chapter-body">
-          <div class="chapter-year">2019</div>
-          <div class="chapter-label">The Beginning</div>
-          <h3>First Hello</h3>
-          <p>[Placeholder — how you first met or first noticed each other.]</p>
-          <div class="chapter-img cimg1">photo</div>
+          <div class="chapter-layout">
+            <div class="chapter-img chapter-img--empty">Coming soon<div class="chapter-photo-year">2019</div><div class="chapter-photo-label">The Beginning</div></div>
+            <div class="chapter-copy">
+              <h3>First Hello</h3>
+              <p>[Placeholder — how you first met or first noticed each other.]</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="chapter reveal">
-        <div class="chapter-dot">02</div>
         <div class="chapter-body">
-          <div class="chapter-year">2022</div>
-          <div class="chapter-label">Growing Closer</div>
-          <h3>A Quiet Friendship</h3>
-          <p>[Placeholder — how the friendship deepened into something more.]</p>
-          <div class="chapter-img cimg2">photo</div>
+          <div class="chapter-layout">
+            <div class="chapter-img"><img src="assets/quiet_friendship-4x3.jpeg" alt="A quiet friendship"><div class="chapter-photo-wash"></div><div class="chapter-photo-year">2022</div><div class="chapter-photo-label">Growing Closer</div></div>
+            <div class="chapter-copy">
+              <h3>A Quiet Friendship</h3>
+              <p>[Placeholder — how the friendship deepened into something more.]</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="chapter reveal">
-        <div class="chapter-dot">03</div>
         <div class="chapter-body">
-          <div class="chapter-year">2026</div>
-          <div class="chapter-label">Official Meeting ♡</div>
-          <h3>Pennu Kaanal</h3>
-          <p>[Placeholder — the families' official meeting, blessed with smiles and flowers.]</p>
-          <div class="chapter-img cimg3">photo</div>
+          <div class="chapter-layout">
+            <div class="chapter-img"><img src="assets/pennukanal-4x3.jpeg" alt="Pennu Kaanal"><div class="chapter-photo-wash"></div><div class="chapter-photo-year">2026</div><div class="chapter-photo-label">Official Meeting ♡</div></div>
+            <div class="chapter-copy">
+              <h3>Pennu Kaanal</h3>
+              <p>[Placeholder — the families' official meeting, blessed with smiles and flowers.]</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="chapter reveal">
-        <div class="chapter-dot">04</div>
         <div class="chapter-body">
-          <div class="chapter-year">2026</div>
-          <div class="chapter-label">Date Fixed ♡</div>
-          <h3>Betrothal Day</h3>
-          <p>The promise made official — with family, prayer, and celebration on 17th October 2026.</p>
-          <div class="chapter-img cimg4">photo</div>
+          <div class="chapter-layout">
+            <div class="chapter-img"><img src="assets/register_marriage-4x3.jpeg" alt="Register Marriage"><div class="chapter-photo-wash"></div><div class="chapter-photo-year">2026</div><div class="chapter-photo-label">A Promise Made ♡</div></div>
+            <div class="chapter-copy">
+              <h3>Register Marriage</h3>
+              <p>A quiet, meaningful beginning to their next chapter — made official with love and family by their side.</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="chapter reveal">
-        <div class="chapter-dot">05</div>
         <div class="chapter-body">
-          <div class="chapter-year">2026</div>
-          <div class="chapter-label">21 · Oct · 2026 ✨</div>
-          <h3>Forever Begins</h3>
-          <p>Under God's blessing and the witness of everyone who loves them, Akhil and Josmy begin their forever.</p>
-          <div class="chapter-img" style="background:none; padding:0;">
-            <img src="assets/couple-photo.jpg" alt="Akhil Jaison and Josmy John">
+          <div class="chapter-layout">
+            <div class="chapter-img chapter-img--empty">Coming soon<div class="chapter-photo-year">2026</div><div class="chapter-photo-label">Date Fixed ♡</div></div>
+            <div class="chapter-copy">
+              <h3>Betrothal Day</h3>
+              <p>The promise made official — with family, prayer, and celebration on 17th October 2026.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <div class="chapter-body">
+          <div class="chapter-layout">
+            <div class="chapter-img chapter-img--empty">Coming soon<div class="chapter-photo-year">2026</div><div class="chapter-photo-label">21 · Oct · 2026 ✨</div></div>
+            <div class="chapter-copy">
+              <h3>Forever Begins</h3>
+              <p>Under God's blessing and the witness of everyone who loves them, Akhil and Josmy begin their forever.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -512,7 +545,7 @@
       </svg>
     </div>
     <div class="gallery-grid reveal">
-      <div class="ph ph1">photo 1</div>
+      <div class="ph ph1"><img src="assets/gallery-01-garden.png" alt="Akhil and Josmy walking together in a garden"></div>
       <div class="ph ph2">photo 2</div>
       <div class="ph ph3">photo 3</div>
       <div class="ph ph4">photo 4</div>
@@ -573,7 +606,7 @@
 <footer>
   <div class="monogram reveal">A &amp; J</div>
   <div class="fnames reveal">Akhil Jaison &amp; Josmy John</div>
-  <div class="fdate reveal">21 · October · 2026 · Kottayam, Kerala</div>
+  <div class="fdate reveal">21 · October · 2026 · Edakkunnu, Kerala</div>
   <div class="verse reveal">
     "Two are better than one... if either of them falls down, one can help the other up."
     <cite>— Ecclesiastes 4:9</cite>
