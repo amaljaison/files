@@ -263,34 +263,114 @@
   .occasion .maplink:hover{ border-bottom-color: var(--gold); }
 
   /* ---------- Gallery ---------- */
-  .gallery-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  #gallery{ overflow:hidden; isolation:isolate; }
+  #gallery::before, #gallery::after{
+    content:""; position:absolute; z-index:-1; border-radius:50%; filter: blur(60px); opacity:0.55; pointer-events:none;
+  }
+  #gallery::before{ width:420px; height:420px; top:8%; left:-120px; background: radial-gradient(circle, var(--rose), transparent 70%); }
+  #gallery::after{ width:480px; height:480px; bottom:-80px; right:-140px; background: radial-gradient(circle, var(--sage), transparent 70%); }
+  .gallery-glass{
+    position:relative; margin-top: 40px; padding: 16px;
+    background: rgba(255,253,248,0.42);
+    -webkit-backdrop-filter: blur(18px) saturate(140%); backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.65); border-radius: 26px;
+    box-shadow: 0 20px 50px rgba(53,74,58,0.10), inset 0 1px 0 rgba(255,255,255,0.7);
+  }
+  .gallery-glass::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.45), rgba(255,255,255,0) 45%);
+  }
+  .gallery-grid{ columns: 2; column-gap: 14px; }
   .ph{
-    aspect-ratio: 4/5; border-radius: 3px; position: relative; overflow:hidden;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 15px;
-    color: rgba(53,74,58,0.45); text-align:center; padding: 12px;
-    border: 1px solid var(--gold-soft);
+    position:relative; display:block; width:100%; margin: 0 0 14px; padding:0;
+    break-inside: avoid; overflow:hidden; cursor: zoom-in;
+    border: 1px solid var(--gold-soft); border-radius: 14px; background: #EFE8D8;
+    box-shadow: 0 6px 18px rgba(53,74,58,0.08);
+    transition: box-shadow 0.45s ease, border-color 0.45s ease;
   }
-  .ph::after{
-    content:"View"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    background: rgba(53,74,58,0.45); color:#FFFDF8; font-family:'Inter',sans-serif; font-style:normal;
-    font-size: 12px; letter-spacing:0.1em; text-transform:uppercase;
-    opacity:0; transition: opacity 0.25s ease;
+  .ph img{
+    width:100%; height:auto; display:block;
+    transition: transform 0.9s cubic-bezier(.2,.7,.2,1), filter 0.6s ease;
   }
-  .ph img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .ph:hover::after{ opacity:1; }
-  .ph1{ background: linear-gradient(150deg, #EFE8D8, #C9A3A0); }
-  .ph2{ background: linear-gradient(150deg, #DCE3D2, #87977A); aspect-ratio: 4/6; grid-row: span 2; }
-  .ph3{ background: linear-gradient(150deg, #E9DCC0, #C6A96B); }
-  .ph4{ background: linear-gradient(150deg, #E7DCC6, #A9B79B); }
-  .ph5{ background: linear-gradient(150deg, #DDD3B8, #87977A); }
-  .ph6{ background: linear-gradient(150deg, #E7DCC6, #C9A3A0); }
+  .ph .ph-view{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(to top, rgba(53,74,58,0.55), rgba(53,74,58,0.15));
+    opacity:0; transition: opacity 0.4s ease;
+  }
+  .ph .ph-view span{
+    padding: 8px 18px; border-radius: 100px; color:#FFFDF8;
+    font-size: 11px; letter-spacing:0.16em; text-transform:uppercase;
+    background: rgba(255,253,248,0.18); border: 1px solid rgba(255,253,248,0.5);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    transform: translateY(8px); transition: transform 0.4s ease;
+  }
+  .ph:hover, .ph:focus-visible{ border-color: var(--gold); box-shadow: 0 14px 34px rgba(53,74,58,0.18); }
+  .ph:hover img, .ph:focus-visible img{ transform: scale(1.06); }
+  .ph:hover .ph-view, .ph:focus-visible .ph-view{ opacity:1; }
+  .ph:hover .ph-view span, .ph:focus-visible .ph-view span{ transform:none; }
+  .ph:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
+  .ph.reveal{ transform: translateY(24px) scale(0.97); transition: opacity 0.8s ease var(--d,0s), transform 0.8s cubic-bezier(.2,.7,.2,1) var(--d,0s), box-shadow 0.45s ease, border-color 0.45s ease; }
+  .ph.reveal.in{ transform:none; }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+    background: rgba(30,42,33,0.55);
+    -webkit-backdrop-filter: blur(22px) saturate(130%); backdrop-filter: blur(22px) saturate(130%);
+    opacity:0; visibility:hidden; transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+  }
+  .lightbox.open{ opacity:1; visibility:visible; transition: opacity 0.4s ease; }
+  .lb-img{
+    max-width: min(92vw, 1100px); max-height: 86vh; width:auto; height:auto;
+    border-radius: 14px; box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    transform: scale(0.94); opacity:0;
+    transition: transform 0.5s cubic-bezier(.2,.7,.2,1), opacity 0.35s ease;
+    user-select:none; -webkit-user-drag:none;
+  }
+  .lightbox.open .lb-img.ready{ transform:none; opacity:1; }
+  .lb-img.out-left{ transform: translateX(-40px) scale(0.98) !important; opacity:0 !important; }
+  .lb-img.out-right{ transform: translateX(40px) scale(0.98) !important; opacity:0 !important; }
+  .lb-btn{
+    position:absolute; display:flex; align-items:center; justify-content:center;
+    width: 48px; height: 48px; border-radius: 50%; cursor:pointer;
+    color:#FFFDF8; font-size: 22px; line-height:1;
+    background: rgba(255,253,248,0.14); border: 1px solid rgba(255,253,248,0.35);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .lb-btn:hover{ background: rgba(255,253,248,0.28); }
+  .lb-btn:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
+  .lb-close{ top: 20px; right: 20px; }
+  .lb-prev{ left: 20px; top:50%; transform: translateY(-50%); }
+  .lb-next{ right: 20px; top:50%; transform: translateY(-50%); }
+  .lb-prev:hover{ transform: translateY(-50%) translateX(-3px); }
+  .lb-next:hover{ transform: translateY(-50%) translateX(3px); }
+  .lb-count{
+    position:absolute; bottom: 22px; left:50%; transform: translateX(-50%);
+    padding: 5px 14px; border-radius: 100px; color:#FFFDF8; font-size: 12px; letter-spacing: 0.14em;
+    background: rgba(255,253,248,0.14); border: 1px solid rgba(255,253,248,0.3);
+  }
+  @media (max-width: 640px){
+    .lb-prev, .lb-next{ top:auto; bottom: 14px; transform:none; width:44px; height:44px; }
+    .lb-prev:hover, .lb-next:hover{ transform:none; }
+    .lb-prev{ left: 16px; } .lb-next{ right: 16px; }
+    .lb-count{ bottom: 26px; }
+    .lb-img{ max-height: 78vh; }
+    .gallery-glass{ padding: 10px; border-radius: 20px; }
+    .gallery-grid{ column-gap: 10px; }
+    .ph{ margin-bottom: 10px; border-radius: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ph.reveal{ transform:none; }
+    .ph img, .lb-img, .lightbox{ transition:none; }
+  }
 
   /* ---------- Wishes ---------- */
   .wish-note{ text-align:center; font-size: 14px; color: var(--sage); margin-bottom: 46px; }
   .wish-note a{ color: var(--gold); }
-  .wishes-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .wishes-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap: 22px; }
   .wish-card{
+    flex: 0 1 calc((100% - 22px) / 2);
     background:#FFFFFF; border: 1px solid var(--line); border-radius: 4px; padding: 26px 24px;
   }
   .wish-quote{ font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: #4A5A4C; margin-bottom: 16px; }
@@ -332,13 +412,12 @@
   }
   @media (min-width: 960px){
     .wrap{ max-width: 920px; }
-    .gallery-grid{ grid-template-columns: repeat(4, 1fr); }
-    .ph2{ grid-row: span 1; aspect-ratio: 4/5; }
-    .wishes-grid{ grid-template-columns: repeat(4, 1fr); }
+    .gallery-grid{ columns: 3; }
+    .wish-card{ flex-basis: calc((100% - 66px) / 4); }
     section{ padding: 120px 0; }
   }
   @media (max-width: 700px){
-    .wishes-grid{ grid-template-columns: 1fr; }
+    .wish-card{ flex-basis: 100%; }
   }
   @media (max-width: 640px){
     .occasion-grid{ grid-template-columns: 1fr; gap: 18px; }
@@ -397,10 +476,10 @@
       <div class="chapter reveal">
         <div class="chapter-body">
           <div class="chapter-layout">
-            <div class="chapter-img chapter-img--empty">Coming soon<div class="chapter-photo-year">2019</div><div class="chapter-photo-label">The Beginning</div></div>
+            <div class="chapter-img chapter-img--empty">Coming soon<div class="chapter-photo-year">2025</div><div class="chapter-photo-label">The Beginning</div></div>
             <div class="chapter-copy">
               <h3>First Hello</h3>
-              <p>[Placeholder — how you first met or first noticed each other.]</p>
+              <p>Two names were shared, a message was sent, and a conversation began. Little did they know, their first “hello” was the beginning of forever.</p>
             </div>
           </div>
         </div>
@@ -408,10 +487,10 @@
       <div class="chapter reveal">
         <div class="chapter-body">
           <div class="chapter-layout">
-            <div class="chapter-img"><img src="assets/quiet_friendship-4x3.jpeg" alt="A quiet friendship"><div class="chapter-photo-wash"></div><div class="chapter-photo-year">2022</div><div class="chapter-photo-label">Growing Closer</div></div>
+            <div class="chapter-img"><img src="assets/quiet_friendship-4x3.jpeg" alt="A quiet friendship"><div class="chapter-photo-wash"></div><div class="chapter-photo-year">2025</div><div class="chapter-photo-label">Growing Closer</div></div>
             <div class="chapter-copy">
               <h3>A Quiet Friendship</h3>
-              <p>[Placeholder — how the friendship deepened into something more.]</p>
+              <p>Though miles and time zones stood between them, their conversations brought them closer. What began with messages and video calls quietly blossomed into a friendship that felt a little more special with every passing day.</p>
             </div>
           </div>
         </div>
@@ -422,7 +501,7 @@
             <div class="chapter-img"><img src="assets/pennukanal-4x3.jpeg" alt="Pennu Kaanal"><div class="chapter-photo-wash"></div><div class="chapter-photo-year">2026</div><div class="chapter-photo-label">Official Meeting ♡</div></div>
             <div class="chapter-copy">
               <h3>Pennu Kaanal</h3>
-              <p>[Placeholder — the families' official meeting, blessed with smiles and flowers.]</p>
+              <p>The decision had already been made, but some moments are meant to be experienced in person. Akhil flew to India, and at Josmy’s home, their families gathered for their first official meeting — a day filled with smiles, flowers, and the joy of finally seeing their story unfold before them.</p>
             </div>
           </div>
         </div>
@@ -433,7 +512,7 @@
             <div class="chapter-img"><img src="assets/register_marriage-4x3.jpeg" alt="Register Marriage"><div class="chapter-photo-wash"></div><div class="chapter-photo-year">2026</div><div class="chapter-photo-label">A Promise Made ♡</div></div>
             <div class="chapter-copy">
               <h3>Register Marriage</h3>
-              <p>A quiet, meaningful beginning to their next chapter — made official with love and family by their side.</p>
+              <p>Tradition usually has its own order — but their story chose a different one. With love, family, and a little twist to the usual way of doing things, Akhil and Josmy made their marriage official first, beginning their next chapter together long before the celebrations would follow.</p>
             </div>
           </div>
         </div>
@@ -444,7 +523,7 @@
             <div class="chapter-img chapter-img--empty">Coming soon<div class="chapter-photo-year">2026</div><div class="chapter-photo-label">Date Fixed ♡</div></div>
             <div class="chapter-copy">
               <h3>Betrothal Day</h3>
-              <p>The promise made official — with family, prayer, and celebration on 17th October 2026.</p>
+              <p>A promise already made, now celebrated with everyone who mattered. On 17th October 2026, family and friends gathered in prayer and joy as Akhil and Josmy marked this beautiful chapter of their journey together.</p>
             </div>
           </div>
         </div>
@@ -544,13 +623,16 @@
         <ellipse cx="30" cy="7" rx="4" ry="2" fill="#87977A" opacity="0.6"/>
       </svg>
     </div>
-    <div class="gallery-grid reveal">
-      <div class="ph ph1"><img src="assets/gallery-01-garden.png" alt="Akhil and Josmy walking together in a garden"></div>
-      <div class="ph ph2">photo 2</div>
-      <div class="ph ph3">photo 3</div>
-      <div class="ph ph4">photo 4</div>
-      <div class="ph ph5">photo 5</div>
-      <div class="ph ph6">photo 6</div>
+    <div class="gallery-glass reveal">
+      <div class="gallery-grid" id="galleryGrid">
+        <a class="ph reveal" href="assets/gallery-01-garden.png" style="--d:0.00s" aria-label="View photo 1 of 7"><img src="assets/gallery-01-garden.png" alt="Akhil and Josmy walking together in a garden" loading="lazy" decoding="async"><span class="ph-view"><span>View</span></span></a>
+        <a class="ph reveal" href="assets/gallery-02.jpeg" style="--d:0.08s" aria-label="View photo 2 of 7"><img src="assets/gallery-02.jpeg" alt="Akhil and Josmy — photo 2" loading="lazy" decoding="async"><span class="ph-view"><span>View</span></span></a>
+        <a class="ph reveal" href="assets/gallery-03.jpeg" style="--d:0.16s" aria-label="View photo 3 of 7"><img src="assets/gallery-03.jpeg" alt="Akhil and Josmy — photo 3" loading="lazy" decoding="async"><span class="ph-view"><span>View</span></span></a>
+        <a class="ph reveal" href="assets/gallery-04.jpeg" style="--d:0.24s" aria-label="View photo 4 of 7"><img src="assets/gallery-04.jpeg" alt="Akhil and Josmy — photo 4" loading="lazy" decoding="async"><span class="ph-view"><span>View</span></span></a>
+        <a class="ph reveal" href="assets/gallery-05.jpeg" style="--d:0.32s" aria-label="View photo 5 of 7"><img src="assets/gallery-05.jpeg" alt="Akhil and Josmy — photo 5" loading="lazy" decoding="async"><span class="ph-view"><span>View</span></span></a>
+        <a class="ph reveal" href="assets/gallery-06.jpeg" style="--d:0.40s" aria-label="View photo 6 of 7"><img src="assets/gallery-06.jpeg" alt="Akhil and Josmy — photo 6" loading="lazy" decoding="async"><span class="ph-view"><span>View</span></span></a>
+        <a class="ph reveal" href="assets/gallery-07.jpeg" style="--d:0.48s" aria-label="View photo 7 of 7"><img src="assets/gallery-07.jpeg" alt="Akhil and Josmy — photo 7" loading="lazy" decoding="async"><span class="ph-view"><span>View</span></span></a>
+      </div>
     </div>
   </div>
 </section>
@@ -568,36 +650,57 @@
     </div>
     <div class="wishes-grid reveal">
       <div class="wish-card">
-        <div class="wish-quote">"[Placeholder wish — a blessing or a favorite memory, in the family member's own words.]"</div>
+        <div class="wish-quote">“Marriage is the beginning of a beautiful journey, and today we are filled with happiness seeing you both begin it together. May you always have the patience to understand each other, the strength to stand by each other, and God’s blessings in every step of your life.”</div>
         <div class="wish-who">
-          <div class="wish-avatar">T</div>
+          <div class="wish-avatar">J</div>
           <div><div class="wish-name">Mr. Jaison Paul</div><div class="wish-rel">Father of the Groom</div></div>
         </div>
       </div>
       <div class="wish-card">
-        <div class="wish-quote">"[Placeholder wish for the couple.]"</div>
+        <div class="wish-quote">“From the day you both first started talking to this beautiful day, it has been wonderful to watch your bond grow. Josmy, welcome to our family with all our hearts. May your home always be filled with love, laughter, prayer, and togetherness.”</div>
         <div class="wish-who">
-          <div class="wish-avatar">A</div>
+          <div class="wish-avatar">M</div>
           <div><div class="wish-name">Mrs. Mini Jaison</div><div class="wish-rel">Mother of the Groom</div></div>
         </div>
       </div>
       <div class="wish-card">
-        <div class="wish-quote">"[Placeholder wish for the couple.]"</div>
+        <div class="wish-quote">“My greatest wish has always been to see my daughter happy, loved, and cared for. As you begin this journey together, remember to keep faith in your hearts, kindness in your words, and love at the center of your home. My blessing will always be with you.”</div>
         <div class="wish-who">
-          <div class="wish-avatar">K</div>
-          <div><div class="wish-name">Mr. John P O</div><div class="wish-rel">Father of the Bride</div></div>
+          <div class="wish-avatar">J</div>
+          <div><div class="wish-name">Mr. John P O (Late)</div><div class="wish-rel">Father of the Bride</div></div>
         </div>
       </div>
       <div class="wish-card">
-        <div class="wish-quote">"[Placeholder wish for the couple.]"</div>
+        <div class="wish-quote">“Josmy, watching you step into this new chapter fills my heart with both emotion and happiness. Akhil, we welcome you into our family with love. May you both care for each other, keep God close, and build a home where love and peace always have a place.”</div>
         <div class="wish-who">
-          <div class="wish-avatar">M</div>
+          <div class="wish-avatar">S</div>
           <div><div class="wish-name">Mrs. Shiny John</div><div class="wish-rel">Mother of the Bride</div></div>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-quote">“Brother, it feels strange to see you entering this new chapter after all the years of growing up together. Josmy, you are now part of all those stories and memories too. Wishing you both a lifetime of laughter, adventures, and countless moments that are yours alone.”</div>
+        <div class="wish-who">
+          <div class="wish-avatar">A</div>
+          <div><div class="wish-name">Mr. Amal Jaison</div><div class="wish-rel">Brother of the Groom</div></div>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-quote">“We have seen Akhil in many chapters of his life, but seeing him this happy makes this one especially meaningful. May you both always choose each other, support each other, and find reasons to laugh together, even on the ordinary days.”</div>
+        <div class="wish-who">
+          <div class="wish-avatar">V</div>
+          <div><div class="wish-name">Mr. Vimal Jaison</div><div class="wish-rel">Brother of the Groom</div></div>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-quote">“Growing up with Josmy means I have a lifetime of memories, stories, and a few secrets that I probably shouldn’t share! Akhil, you are now part of that story. Wishing you both a marriage filled with friendship, laughter, understanding, and many wonderful memories to come.”</div>
+        <div class="wish-who">
+          <div class="wish-avatar">J</div>
+          <div><div class="wish-name">Mr. Jomon John</div><div class="wish-rel">Brother of the Bride</div></div>
         </div>
       </div>
     </div>
     <div class="send-wish reveal">
-      <a class="btn btn-gold" href="mailto:akhilandjosmy@example.com?subject=A%20Wish%20for%20Ave%20Maria%20%26%20Jerin">♡ Send Your Wish</a>
+      <a class="btn btn-gold" href="mailto:akhilandjosmy@example.com?subject=A%20Wish%20for%20Akhil%20%26%20Josmy">♡ Send Your Wish</a>
       <div class="wish-note" style="margin-top:16px;">Every wish is delivered directly to <a href="mailto:akhilandjosmy@example.com">akhilandjosmy@example.com</a></div>
     </div>
   </div>
@@ -622,6 +725,14 @@
   </nav>
   <div class="credit reveal">Made with ♡ for Akhil &amp; Josmy · 2026</div>
 </footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+  <img class="lb-img" id="lbImg" alt="">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">&#8249;</button>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">&#8250;</button>
+  <div class="lb-count" id="lbCount"></div>
+</div>
 
 <script>
   (function(){
@@ -665,6 +776,74 @@
     }
     tick();
     setInterval(tick, 1000);
+  })();
+  // Gallery lightbox
+  (function(){
+    var tiles = Array.prototype.slice.call(document.querySelectorAll('#galleryGrid .ph'));
+    var lb = document.getElementById('lightbox');
+    var img = document.getElementById('lbImg');
+    var count = document.getElementById('lbCount');
+    var closeBtn = document.getElementById('lbClose');
+    var idx = 0, lastFocus = null, busy = false;
+
+    function show(i, dir){
+      idx = (i + tiles.length) % tiles.length;
+      var t = tiles[idx], src = t.getAttribute('href'), alt = t.querySelector('img').alt;
+      count.textContent = (idx + 1) + ' / ' + tiles.length;
+      var swap = function(){
+        img.classList.remove('ready', 'out-left', 'out-right');
+        img.onload = function(){ requestAnimationFrame(function(){ img.classList.add('ready'); busy = false; }); };
+        img.alt = alt;
+        img.src = src;
+        if (img.complete && img.naturalWidth) img.onload();
+      };
+      if (dir && img.classList.contains('ready')){
+        busy = true;
+        img.classList.add(dir > 0 ? 'out-left' : 'out-right');
+        setTimeout(swap, 250);
+      } else { swap(); }
+      [idx + 1, idx - 1].forEach(function(n){ new Image().src = tiles[(n + tiles.length) % tiles.length].getAttribute('href'); });
+    }
+    function open(i){
+      lastFocus = document.activeElement;
+      lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      show(i);
+      closeBtn.focus();
+    }
+    function close(){
+      lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true');
+      img.classList.remove('ready');
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+    }
+    function step(d){ if (!busy) show(idx + d, d); }
+
+    tiles.forEach(function(t, i){
+      t.addEventListener('click', function(e){ e.preventDefault(); open(i); });
+    });
+    closeBtn.addEventListener('click', close);
+    document.getElementById('lbPrev').addEventListener('click', function(){ step(-1); });
+    document.getElementById('lbNext').addEventListener('click', function(){ step(1); });
+    lb.addEventListener('click', function(e){ if (e.target === lb) close(); });
+    document.addEventListener('keydown', function(e){
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'Tab'){
+        var f = lb.querySelectorAll('button'), first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    });
+    var x0 = null;
+    lb.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function(e){
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+    });
   })();
 </script>
 
